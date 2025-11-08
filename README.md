@@ -1,3 +1,9 @@
 # Proxmox Terraform
 
-_WIP_
+Get started
+
+```
+terraform init
+terraform plan
+terraform apply
+```

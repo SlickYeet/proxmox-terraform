@@ -16,7 +16,7 @@ provider "proxmox" {
 resource "proxmox_vm_qemu" "test" {
   name        = "tf-vm-test"
   target_node = "pve01"
-  clone       = "ubuntu-24.04-template"
+  clone       = "vm-xs-ubuntu-24.04"
   full_clone  = true
   memory      = 2048
   cpu {

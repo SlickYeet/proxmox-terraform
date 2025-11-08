@@ -7,20 +7,32 @@ terraform {
   }
 }
 
-provider "proxmox" {
-  pm_debug        = true
-  pm_tls_insecure = true
-  pm_api_url      = "https://192.168.0.123:8006/api2/json"
+variable "PM_API_URL" {}
+variable "PM_API_TOKEN_ID" {}
+variable "PM_API_TOKEN_SECRET" {
+  sensitive = true
 }
 
-resource "proxmox_vm_qemu" "test" {
-  name        = "tf-vm-test"
+provider "proxmox" {
+  pm_debug            = true
+  pm_tls_insecure     = true
+  pm_api_url          = var.PM_API_URL
+  pm_api_token_id     = var.PM_API_TOKEN_ID
+  pm_api_token_secret = var.PM_API_TOKEN_SECRET
+}
+
+variable "vm_name" {}
+variable "cpu" {}
+variable "memory" {}
+
+resource "proxmox_vm_qemu" "vm" {
+  name        = var.vm_name
   target_node = "pve01"
   clone       = "vm-xs-ubuntu-24.04"
   full_clone  = true
-  memory      = 2048
+  memory      = var.memory
   cpu {
-    cores = 2
+    cores = var.cpu
   }
   network {
     id     = 0

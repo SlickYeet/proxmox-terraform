@@ -7,18 +7,12 @@ terraform {
   }
 }
 
-variable "PM_API_URL" {}
-variable "PM_API_TOKEN_ID" {}
-variable "PM_API_TOKEN_SECRET" {
-  sensitive = true
-}
-
 provider "proxmox" {
   pm_debug            = true
   pm_tls_insecure     = true
-  pm_api_url          = var.PM_API_URL
-  pm_api_token_id     = var.PM_API_TOKEN_ID
-  pm_api_token_secret = var.PM_API_TOKEN_SECRET
+  pm_api_url          = local.envs["PM_API_URL"]
+  pm_api_token_id     = local.envs["PM_API_TOKEN_ID"]
+  pm_api_token_secret = local.envs["PM_API_TOKEN_SECRET"]
 }
 
 variable "vm_name" {}
